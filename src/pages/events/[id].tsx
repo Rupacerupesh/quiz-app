@@ -55,16 +55,18 @@ const FormLayoutsBasic = () => {
     setOpen(false)
   }
 
-  const { control, setValue } = useForm<Events>()
+  const { control, setValue, watch } = useForm<Events>()
 
   useEffect(() => {
     if (fetchData) {
       setValue('name', fetchData.event.name)
       setValue('description', fetchData.event.description)
-      setValue('event_date', fetchData.event.event_date)
+      setValue('event_date', new Date(fetchData.event.event_date) as unknown as string)
       setValue('status', fetchData.event.status)
     }
   }, [fetchData])
+
+  const eventDate = watch('event_date')
 
   return (
     <DatePickerWrapper>
@@ -81,18 +83,9 @@ const FormLayoutsBasic = () => {
                     <Controller
                       name='name'
                       control={control}
-                      defaultValue={fetchData?.event.name}
-                      rules={{ required: true }}
+                      defaultValue=''
                       render={({ field }) => (
-                        <TextField
-                          {...field}
-                          defaultValue={fetchData?.event.name}
-                          value={fetchData?.event.name}
-                          fullWidth
-                          label='Name'
-                          placeholder='Leonard Carter'
-                          required
-                        />
+                        <TextField {...field} fullWidth required label='Name' placeholder='Leonard Carter' />
                       )}
                     />
                   </Grid>
@@ -105,6 +98,7 @@ const FormLayoutsBasic = () => {
                       render={({ field }) => (
                         <DatePicker
                           {...field}
+                          selected={eventDate ? new Date(eventDate) : null}
                           dateFormat='yyyy/MM/dd'
                           showTimeSelect={false}
                           todayButton='Today'
@@ -146,7 +140,7 @@ const FormLayoutsBasic = () => {
                       <Controller
                         name='status'
                         control={control}
-                        defaultValue={true}
+                        defaultValue={false}
                         render={({ field }) => (
                           <Select label='Status' {...field}>
                             <MenuItem value='true'>Active</MenuItem>
@@ -160,7 +154,7 @@ const FormLayoutsBasic = () => {
                   <Grid item xs={12}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end' }}>
                       <Button type='submit' variant='contained'>
-                        Add
+                        Update
                       </Button>
                     </Box>
                   </Grid>

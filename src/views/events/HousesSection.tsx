@@ -1,23 +1,15 @@
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
 
 // ** Icons Imports
-import Heart from 'mdi-material-ui/Heart'
-import ShareVariant from 'mdi-material-ui/ShareVariant'
-import HomeOutline from 'mdi-material-ui/HomeOutline'
-import { Button, Grid, Modal, Paper, TextField } from '@mui/material'
-import React, { useState } from 'react'
+import { Button, Grid, Modal, TextField } from '@mui/material'
+import React from 'react'
 import CardHouses from '../cards/CardHouses'
-import CardFacebook from '../cards/CardFacebook'
-import CardLinkedIn from '../cards/CardLinkedIn'
 
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
-import { HouseType, Participants, postHouse } from 'src/utils/api'
-import { useMutation, useQueryClient } from 'react-query'
+import { HouseType, postHouse } from 'src/utils/api'
+import { useMutation } from 'react-query'
 
 interface CardHouseProps {
   houses: HouseType[]

@@ -1,20 +1,16 @@
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 
 // ** Icons Imports
-import Heart from 'mdi-material-ui/Heart'
-import ShareVariant from 'mdi-material-ui/ShareVariant'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import {
   Button,
   ButtonProps,
   FormControl,
   Grid,
-  Input,
   InputLabel,
   MenuItem,
   Modal,
@@ -84,8 +80,7 @@ const CardHouses = (props: CardHouseProps) => {
   } = useForm<Participants>({})
 
   // const onSubmit: SubmitHandler<Participants> = data => mutation.mutate({ ...data, house_id: houseID })
-  const onSubmit: SubmitHandler<Participants> = data =>
-    mutation.mutate({ house_id: houseID, grade: data.grade, name: data.name, is_captain: true })
+  const onSubmit: SubmitHandler<Participants> = data => mutation.mutate({ ...data, house_id: houseID })
 
   const mutation = useMutation({
     mutationFn: postParticipant,
@@ -203,11 +198,11 @@ const CardHouses = (props: CardHouseProps) => {
                     <Controller
                       name='is_captain'
                       control={control}
-                      defaultValue={true}
+                      defaultValue={false}
                       render={({ field }) => (
                         <Select label='Captain' {...field}>
-                          <MenuItem value='1'>Captain</MenuItem>
-                          <MenuItem value='0'>Not Captain</MenuItem>
+                          <MenuItem value='true'>Captain</MenuItem>
+                          <MenuItem value='false'>Not Captain</MenuItem>
                         </Select>
                       )}
                     />
