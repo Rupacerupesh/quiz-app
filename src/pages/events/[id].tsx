@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, forwardRef, useEffect } from 'react'
+import { forwardRef, useEffect } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -16,7 +16,6 @@ import DatePicker from 'react-datepicker'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import React from 'react'
-import TestCollapsible from 'src/views/tables/TestCollapsible'
 import HousesSection from 'src/views/events/HousesSection'
 import { FormControl, InputLabel, MenuItem, Snackbar } from '@mui/material'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
@@ -25,7 +24,7 @@ import { Select } from '@mui/material'
 import ParticipantsTable from 'src/views/events/ParticipantsTable'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
-import { Events, fetchEventById, fetchEvents } from 'src/utils/api'
+import { Events, fetchEventById } from 'src/utils/api'
 import { Controller, useForm } from 'react-hook-form'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
@@ -35,19 +34,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 const CustomInput = forwardRef((props, ref) => {
   return <TextField fullWidth {...props} inputRef={ref} label='Event Date' autoComplete='off' />
 })
-
-interface HouseTypes {
-  name: string
-  description: string
-  participants: Participants[]
-}
-
-interface Participants {
-  name: string
-  class: string
-  captain: string
-  house: string
-}
 
 const FormLayoutsBasic = () => {
   const router = useRouter()
@@ -59,43 +45,7 @@ const FormLayoutsBasic = () => {
     enabled: !!router.query.id
   })
 
-  console.log({ gg: router.query.id })
-
   const [open, setOpen] = React.useState(false)
-
-  const [data, setData] = useState<HouseTypes[]>([
-    { name: 'blue', description: 'Hi I am blue', participants: [] },
-    { name: 'red', description: 'Hi I am blue', participants: [] },
-    { name: 'green', description: 'Hi I am blue', participants: [] },
-    { name: 'yellow', description: 'Hi I am blue', participants: [] },
-    { name: 'asd', description: 'Hi I am blue', participants: [] }
-  ])
-
-  const addHouseFunction = (args: HouseTypes) => {
-    setOpen(true)
-    setData(prevState => [...prevState, { ...args }])
-  }
-
-  const addParticipants = (participant: Participants) => {
-    setOpen(true)
-
-    const houseIndex = data.findIndex(e => e.name === participant.house)
-
-    if (houseIndex >= 0) {
-      const newData = [...data]
-      const house = newData[houseIndex]
-
-      const participantExists = house.participants.some(i => i.name === participant.name)
-
-      if (participantExists) {
-        house.participants = house.participants.filter(p => p.name !== participant.name)
-      } else {
-        house.participants.push(participant)
-      }
-
-      setData(newData)
-    }
-  }
 
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
@@ -156,7 +106,6 @@ const FormLayoutsBasic = () => {
                         <DatePicker
                           {...field}
                           dateFormat='yyyy/MM/dd'
-                          // selected={eventDate ? new Date(eventDate) : null}
                           showTimeSelect={false}
                           todayButton='Today'
                           customInput={<CustomInput />}
