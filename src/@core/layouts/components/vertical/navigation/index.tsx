@@ -52,12 +52,7 @@ const StyledBoxForShadow = styled(Box)<BoxProps>({
 
 const Navigation = (props: Props) => {
   // ** Props
-  const {
-    hidden,
-    afterVerticalNavMenuContent,
-    beforeVerticalNavMenuContent,
-    verticalNavMenuContent: userVerticalNavMenuContent
-  } = props
+  const { hidden, beforeVerticalNavMenuContent, verticalNavMenuContent: userVerticalNavMenuContent } = props
 
   // ** States
   const [groupActive, setGroupActive] = useState<string[]>([])
@@ -145,7 +140,6 @@ const Navigation = (props: Props) => {
           </Box>
         </ScrollWrapper>
       </Box>
-      {afterVerticalNavMenuContent ? afterVerticalNavMenuContent(props) : null}
     </Drawer>
   )
 }
