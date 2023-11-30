@@ -4,24 +4,12 @@ export const url = {
   getEventById: '/event/:eventId',
   postHouse: '/house',
   postParticipant: '/participant',
-
-  login: '/auth/login',
-  changePassword: '/auth/change-password',
-  refresh: '/auth/refresh',
-  me: '/auth/me',
-  form: '/form',
-  formSearch: '/form/search',
-  formById: '/form/:formId',
-  link: '/link',
-  tokenLink: '/link/:tokenLink/form',
-  patientInfo: '/patient/info',
-  patientInfoSearch: '/patient/search',
-  patientInfoById: '/patient/info/:patientId',
-  downloadPatientInfoById: '/patient/info/download/:patientId',
-  treatmentData: '/treatmentData',
-  treatmentFormById: '/treatmentForm/:treatmentFormId',
-  downloadtreatmentForm: '/treatmentForm/download/:treatmentFormId',
-
-  treatmentForm: '/treatmentForm'
+  getHouses: '/houses',
+  getParticipants: '/participants',
+  getRounds: '/rounds',
+  postRound: '/round',
+  getRoundById: '/round/:roundId',
+  getRoundPoints: '/round-points',
+  postRoundPoints: '/round-point'
 }
 export default url

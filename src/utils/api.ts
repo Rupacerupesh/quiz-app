@@ -23,10 +23,27 @@ export interface HouseType {
   event_id: string
 }
 export interface Participants {
+  id: string
   name: string
   grade: string
   is_captain: boolean
   house_id: string
+}
+
+export interface Rounds {
+  id: string
+  round_name: string
+  round_description: string
+}
+
+export interface RoundsPoints {
+  attempt_number: number
+  category_exists: boolean
+  id: number
+  negative_points: number
+  points: number
+  round_id: string
+  time_limit: number
 }
 
 export const fetchEvents = async (): Promise<Events[]> => {
@@ -73,6 +90,61 @@ export const postParticipant = async (formData: Participants) => {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
+  })
+
+  return response.data
+}
+
+export const fetchHouses = async (): Promise<HouseType[]> => {
+  const response = await authHttp({ url: url.getHouses, method: 'GET' })
+
+  return response.data
+}
+
+export const fetchParticipants = async (): Promise<Participants[]> => {
+  const response = await authHttp({ url: url.getParticipants, method: 'GET' })
+
+  return response.data
+}
+
+export const fetchRounds = async (): Promise<Rounds[]> => {
+  const response = await authHttp({ url: url.getRounds, method: 'GET' })
+
+  return response.data
+}
+
+export const fetchRoundById = async ({ queryKey }: { queryKey: any }): Promise<Rounds> => {
+  const [, data] = queryKey
+
+  const response = await authHttp({
+    url: `${url.getRoundById.replace(':roundId', data.roundId)}`,
+    method: 'GET'
+  })
+
+  return response.data
+}
+
+export const fetchRoundPoints = async (): Promise<RoundsPoints[]> => {
+  const response = await authHttp({ url: url.getRoundPoints, method: 'GET' })
+
+  return response.data
+}
+
+export const postRound = async (formData: Rounds) => {
+  const response = await authHttp({
+    url: url.postEvent,
+    method: 'POST',
+    data: formData
+  })
+
+  return response.data
+}
+
+export const postRoundPoint = async (formData: RoundsPoints) => {
+  const response = await authHttp({
+    url: url.postRoundPoints,
+    method: 'POST',
+    data: formData
   })
 
   return response.data

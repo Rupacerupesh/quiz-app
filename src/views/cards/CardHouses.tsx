@@ -22,10 +22,11 @@ import React, { ChangeEvent, ElementType, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { Participants, postParticipant } from 'src/utils/api'
+import { isTextColorWhite, isValidColorCode } from 'src/utils/colors'
 
 interface CardHouseProps {
   name: string
-  description: string
+  colorCode: string
   refetch: () => void
   houseID: string
 }
@@ -66,7 +67,7 @@ const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
 }))
 
 const CardHouses = (props: CardHouseProps) => {
-  const { name, refetch, houseID } = props
+  const { name, refetch, houseID, colorCode } = props
 
   const [openParticipantModal, setOpenParticipantModal] = React.useState(false)
   const handleOpenParticipantModal = () => setOpenParticipantModal(true)
@@ -231,11 +232,23 @@ const CardHouses = (props: CardHouseProps) => {
         </Box>
       </Modal>
 
-      <Card sx={{ border: 0, boxShadow: 0, color: 'common.white', backgroundColor: 'info.main' }}>
+      <Card
+        sx={{
+          border: 0,
+          boxShadow: 0,
+          color: isTextColorWhite(colorCode) ? 'none' : 'common.white',
+          backgroundColor: isValidColorCode(colorCode) ? colorCode : 'info.main'
+        }}
+      >
         <CardContent sx={{ padding: theme => `${theme.spacing(4)} !important` }}>
           <Typography
             variant='h6'
-            sx={{ display: 'flex', marginBottom: 2.75, alignItems: 'center', color: 'common.white' }}
+            sx={{
+              display: 'flex',
+              marginBottom: 2.75,
+              alignItems: 'center',
+              color: isTextColorWhite(colorCode) ? 'none' : 'common.white'
+            }}
           >
             <HomeOutline sx={{ marginRight: 2.5 }} />
             {name}

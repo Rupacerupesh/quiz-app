@@ -114,12 +114,7 @@ const HousesSection = (props: CardHouseProps) => {
 
         {houses?.map(item => (
           <Grid key={item.house_name} xs={12} sm={6} md={4} item>
-            <CardHouses
-              refetch={refetch}
-              name={item.house_name}
-              description={item.color_code}
-              houseID={item.house_id}
-            />
+            <CardHouses refetch={refetch} name={item.house_name} colorCode={item.color_code} houseID={item.house_id} />
           </Grid>
         ))}
       </Grid>

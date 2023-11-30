@@ -29,7 +29,7 @@ export const authHttp = axios.create({
  */
 authHttp.interceptors.request.use(
   (config: any) => {
-    const accessToken = localStorage.getItem('acc')
+    const accessToken = localStorage.getItem('fss-quiz')
     if (accessToken) {
       // eslint-disable-next-line no-param-reassign
       config.headers = {

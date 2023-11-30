@@ -13,6 +13,7 @@ import { Button } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
 import { fetchEvents } from 'src/utils/api'
+import { format } from 'date-fns'
 
 const Events = () => {
   const router = useRouter()
@@ -39,6 +40,7 @@ const Events = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
+                  <TableCell>Description</TableCell>
                   <TableCell>Date</TableCell>
                 </TableRow>
               </TableHead>
@@ -47,16 +49,16 @@ const Events = () => {
                   <TableRow
                     hover
                     key={ev.name}
-                    sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}
                     onClick={() => router.push(`/events/${ev.id}`)}
+                    style={{ cursor: 'pointer' }}
                   >
-                    <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
-                      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                        <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{ev.name}</Typography>
-                        <Typography variant='caption'>{ev.description}</Typography>
-                      </Box>
+                    <TableCell>
+                      <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{ev.name}</Typography>
                     </TableCell>
-                    <TableCell>{ev.event_date}</TableCell>
+                    <TableCell>
+                      <Typography variant='caption'>{ev.description}</Typography>
+                    </TableCell>
+                    <TableCell width={200}>{format(new Date(ev.event_date), 'yyyy-MM-dd')}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
 
 // ** Types Imports
-import { ThemeColor } from 'src/@core/layouts/types'
 import { HouseType } from 'src/utils/api'
 
 interface ParticipantsTableProps {
