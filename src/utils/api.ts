@@ -21,6 +21,8 @@ export interface HouseType {
   color_code: string
   participants?: Participants[]
   event_id: string
+  event_name: string
+  total_participants: string
 }
 export interface Participants {
   id: string
@@ -28,12 +30,17 @@ export interface Participants {
   grade: string
   is_captain: boolean
   house_id: string
+  image_path: string
+  file?: FileList
+  house_name: string
+  color_code: string
 }
 
 export interface Rounds {
-  id: string
+  round_id: string
   round_name: string
   round_description: string
+  round_points: RoundsPoints[]
 }
 
 export interface RoundsPoints {
@@ -82,7 +89,7 @@ export const postHouse = async (formData: HouseType) => {
   return response.data
 }
 
-export const postParticipant = async (formData: Participants) => {
+export const postParticipant = async (formData: FormData) => {
   const response = await authHttp({
     url: url.postParticipant,
     method: 'POST',

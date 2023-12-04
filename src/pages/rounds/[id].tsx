@@ -20,7 +20,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert'
 
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
-import { Rounds, fetchRoundById, fetchRoundPoints } from 'src/utils/api'
+import { Rounds, fetchRoundById } from 'src/utils/api'
 import { Controller, useForm } from 'react-hook-form'
 import RoundPointsList from 'src/views/rounds/RoundPointsList'
 
@@ -33,16 +33,10 @@ const EditRound = () => {
 
   // ** States
 
-  const { data: fetchData } = useQuery([`fetchRoundByID`, { roundId: router.query.id }], fetchRoundById, {
+  const { data: fetchData, refetch } = useQuery([`fetchRoundByID`, { roundId: router.query.id }], fetchRoundById, {
     refetchOnWindowFocus: false,
     enabled: !!router.query.id
   })
-
-  const { data: fetchDataRoundPoints, refetch } = useQuery([`fetchRoundPoints`], fetchRoundPoints, {
-    refetchOnWindowFocus: false
-  })
-
-  const roundPointsData = fetchDataRoundPoints?.filter(e => e.round_id == router.query.id)
 
   const [open, setOpen] = React.useState(false)
 
@@ -123,7 +117,7 @@ const EditRound = () => {
         <RoundPointsList
           refetch={refetch}
           roundId={(router.query.id as string) ?? ''}
-          roundPointsData={roundPointsData ?? []}
+          roundPointsData={fetchData?.round_points ?? []}
         />
       </Box>
 

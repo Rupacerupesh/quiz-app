@@ -18,17 +18,19 @@ import {
   TextField,
   styled
 } from '@mui/material'
-import React, { ChangeEvent, ElementType, useState } from 'react'
+import React, { ElementType, useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { Participants, postParticipant } from 'src/utils/api'
 import { isTextColorWhite, isValidColorCode } from 'src/utils/colors'
+import { AccountGroup } from 'mdi-material-ui'
 
 interface CardHouseProps {
   name: string
   colorCode: string
   refetch: () => void
   houseID: string
+  totalParticipants: number
 }
 
 const style = {
@@ -67,21 +69,42 @@ const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
 }))
 
 const CardHouses = (props: CardHouseProps) => {
-  const { name, refetch, houseID, colorCode } = props
+  const { name, refetch, houseID, colorCode, totalParticipants } = props
 
   const [openParticipantModal, setOpenParticipantModal] = React.useState(false)
   const handleOpenParticipantModal = () => setOpenParticipantModal(true)
   const handleCloseParticipantModal = () => setOpenParticipantModal(false)
 
   const {
+    register,
     handleSubmit,
     control,
     reset,
-    formState: { errors }
+    formState: { errors },
+    watch
   } = useForm<Participants>({})
 
-  // const onSubmit: SubmitHandler<Participants> = data => mutation.mutate({ ...data, house_id: houseID })
-  const onSubmit: SubmitHandler<Participants> = data => mutation.mutate({ ...data, house_id: houseID })
+  const onSubmit: SubmitHandler<Participants> = data => {
+    const formData = new FormData()
+
+    if (data.file?.[0]) {
+      formData.append('image', data.file?.[0])
+    }
+    formData.append('grade', data.grade)
+    formData.append('is_captain', data.is_captain ? 'true' : 'false')
+    formData.append('name', data.name)
+    formData.append('house_id', houseID)
+    mutation.mutate(formData)
+  }
+
+  const test = watch('file')
+
+  useEffect(() => {
+    if (test && test[0]) {
+      const newUrl = URL.createObjectURL(test[0])
+      setImgSrc(newUrl)
+    }
+  }, [test])
 
   const mutation = useMutation({
     mutationFn: postParticipant,
@@ -93,16 +116,6 @@ const CardHouses = (props: CardHouseProps) => {
   })
 
   const [imgSrc, setImgSrc] = useState<string>('/images/avatars/1.png')
-
-  const onChange = (file: ChangeEvent) => {
-    const reader = new FileReader()
-    const { files } = file.target as HTMLInputElement
-    if (files && files.length !== 0) {
-      reader.onload = () => setImgSrc(reader.result as string)
-
-      reader.readAsDataURL(files[0])
-    }
-  }
 
   return (
     <>
@@ -129,9 +142,9 @@ const CardHouses = (props: CardHouseProps) => {
                           <input
                             hidden
                             type='file'
-                            onChange={onChange}
                             accept='image/png, image/jpeg'
                             id='account-settings-upload-image'
+                            {...register('file')}
                           />
                         </ButtonStyled>
                         <ResetButtonStyled
@@ -148,25 +161,6 @@ const CardHouses = (props: CardHouseProps) => {
                     </Box>
                   </Box>
                 </Grid>
-                {/* 
-                <Grid item xs={12} sm={6}>
-                  <Controller
-                    control={control}
-                    name={'picture'}
-                    rules={{ required: 'Recipe picture is required' }}
-                    render={({ field }) => {
-                      return (
-                        <input
-                          {...field}
-                          type='file'
-                          value={field.name}
-                          id='picture'
-                          onChange={(event: React.ChangeEvent<HTMLInputElement>) => field.onChange(event.target.files)}
-                        />
-                      )
-                    }}
-                  />
-                </Grid> */}
 
                 <Grid item xs={12} sm={6}>
                   <Controller
@@ -241,27 +235,36 @@ const CardHouses = (props: CardHouseProps) => {
         }}
       >
         <CardContent sx={{ padding: theme => `${theme.spacing(4)} !important` }}>
-          <Typography
-            variant='h6'
-            sx={{
-              display: 'flex',
-              marginBottom: 2.75,
-              alignItems: 'center',
-              color: isTextColorWhite(colorCode) ? 'none' : 'common.white'
-            }}
-          >
-            <HomeOutline sx={{ marginRight: 2.5 }} />
-            {name}
-          </Typography>
-
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end' }}>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ mr: 2, display: 'flex', alignItems: 'center' }}>
+              <Typography
+                variant='h6'
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: isTextColorWhite(colorCode) ? 'none' : 'common.white'
+                }}
+              >
+                <HomeOutline sx={{ marginRight: 2.5 }} />
+                {name}
+              </Typography>
+            </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', mr: 3.5 }}>
-                <Button type='submit' variant='contained' size='small' onClick={handleOpenParticipantModal}>
-                  Add Participant
-                </Button>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <AccountGroup sx={{ marginRight: 1.25 }} />
+                <Typography variant='h6' sx={{ color: isTextColorWhite(colorCode) ? 'gray' : 'common.white' }}>
+                  {totalParticipants}
+                </Typography>
               </Box>
             </Box>
+          </Box>
+
+          <Box
+            sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end', marginTop: 2 }}
+          >
+            <Button type='submit' variant='contained' size='small' onClick={handleOpenParticipantModal}>
+              Add Participant
+            </Button>
           </Box>
         </CardContent>
       </Card>

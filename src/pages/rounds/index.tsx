@@ -45,10 +45,10 @@ const Rounds = () => {
                 {data?.map(row => (
                   <TableRow
                     hover
-                    key={row.id}
+                    key={row.round_id}
                     sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}
                     style={{ cursor: 'pointer' }}
-                    onClick={() => router.push(`/rounds/${row.id}`)}
+                    onClick={() => router.push(`/rounds/${row.round_id}`)}
                   >
                     <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
                       <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>

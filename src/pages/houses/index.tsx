@@ -32,33 +32,39 @@ const Houses = () => {
                 <TableRow>
                   <TableCell>Name</TableCell>
                   <TableCell>Event</TableCell>
+                  <TableCell>Total Participants</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {data?.map(row => (
                   <TableRow hover key={row.house_id} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
                     <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
-                      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                        <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>
-                          {row.house_name}
-                        </Typography>
-                        <Typography variant='caption'>{row.color_code}</Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell>
                       <Chip
-                        label={row.event_id}
+                        label={row.house_name}
                         color='info'
                         sx={{
                           backgroundColor: isValidColorCode(row.color_code) ? row.color_code : 'blue',
-                          color: isTextColorWhite(row.color_code) ? 'none' : 'common.white',
-
+                          color: isTextColorWhite(row.color_code) ? 'gray' : 'common.white',
                           height: 24,
                           fontSize: '0.75rem',
                           textTransform: 'capitalize',
                           '& .MuiChip-label': { fontWeight: 500 }
                         }}
                       />
+
+                      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                        <Typography variant='caption'>{row.color_code}</Typography>
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>
+                        {row.event_name}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>
+                        {row.total_participants}
+                      </Typography>
                     </TableCell>
                   </TableRow>
                 ))}
