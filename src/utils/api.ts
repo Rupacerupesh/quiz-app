@@ -45,10 +45,10 @@ export interface Rounds {
 
 export interface RoundsPoints {
   attempt_number: number
-  category_exists: boolean
-  id: number
-  negative_points: number
-  points: number
+  category_exists: boolean | string
+  id?: number
+  negative_points?: number
+  points?: number
   round_id: string
   time_limit: number
 }

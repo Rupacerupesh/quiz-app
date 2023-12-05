@@ -39,12 +39,12 @@ const CardCategories = (props: CardCategories) => {
               <StyledBox>
                 <Box sx={{ mb: 6.75, display: 'flex', alignItems: 'center' }}>
                   <Typography variant='body2' color='common.white'>
-                    Point
+                    Points
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Typography variant='body2' color='common.white'>
-                    Negative Point
+                    Negative Points
                   </Typography>
                 </Box>
               </StyledBox>
