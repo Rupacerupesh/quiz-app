@@ -30,27 +30,27 @@ interface DataType {
 
 const salesData: DataType[] = [
   {
-    stats: '245k',
-    title: 'Sales',
+    stats: '20',
+    title: 'Events',
     color: 'primary',
     icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
   },
   {
-    stats: '12.5k',
-    title: 'Customers',
+    stats: '1k',
+    title: 'Participants',
     color: 'success',
     icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
   },
   {
-    stats: '1.54k',
+    stats: '20',
     color: 'warning',
-    title: 'Products',
+    title: 'Rounds',
     icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
   },
   {
-    stats: '$88k',
+    stats: '88',
     color: 'info',
-    title: 'Revenue',
+    title: 'Houses',
     icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
   }
 ]

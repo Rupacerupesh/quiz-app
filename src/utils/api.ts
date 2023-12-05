@@ -53,6 +53,14 @@ export interface RoundsPoints {
   time_limit: number
 }
 
+export interface Categories {
+  id: number
+  negative_points: number
+  point: number
+  round_id: string
+  question_type: string
+}
+
 export const fetchEvents = async (): Promise<Events[]> => {
   const response = await authHttp({ url: url.getEvents, method: 'GET' })
 
@@ -120,6 +128,12 @@ export const fetchRounds = async (): Promise<Rounds[]> => {
   return response.data
 }
 
+export const fetchCategories = async (): Promise<Categories[]> => {
+  const response = await authHttp({ url: url.getCategories, method: 'GET' })
+
+  return response.data
+}
+
 export const fetchRoundById = async ({ queryKey }: { queryKey: any }): Promise<Rounds> => {
   const [, data] = queryKey
 
@@ -150,6 +164,16 @@ export const postRound = async (formData: Rounds) => {
 export const postRoundPoint = async (formData: RoundsPoints) => {
   const response = await authHttp({
     url: url.postRoundPoints,
+    method: 'POST',
+    data: formData
+  })
+
+  return response.data
+}
+
+export const postCategory = async (formData: Categories) => {
+  const response = await authHttp({
+    url: url.postCategory,
     method: 'POST',
     data: formData
   })

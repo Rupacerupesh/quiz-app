@@ -10,6 +10,8 @@ export const url = {
   postRound: '/round',
   getRoundById: '/round/:roundId',
   getRoundPoints: '/round-points',
-  postRoundPoints: '/round-point'
+  postRoundPoints: '/round-point',
+  getCategories: '/categories',
+  postCategory: '/category'
 }
 export default url
