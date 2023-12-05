@@ -10,18 +10,7 @@ import TableContainer from '@mui/material/TableContainer'
 
 // ** Types Imports
 import { RoundsPoints, postRoundPoint } from 'src/utils/api'
-import {
-  Box,
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Select,
-  TextField,
-  Typography
-} from '@mui/material'
+import { Box, Button, Grid, Modal, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
@@ -50,7 +39,7 @@ const RoundPointsList = (props: RoundPointsListProps) => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const { handleSubmit, control, reset, watch } = useForm<RoundsPoints>()
+  const { handleSubmit, control, reset } = useForm<RoundsPoints>()
 
   const mutation = useMutation({
     mutationFn: postRoundPoint,
@@ -61,20 +50,7 @@ const RoundPointsList = (props: RoundPointsListProps) => {
     }
   })
 
-  const categoryExists = watch('category_exists') == 'true'
-
-  const onSubmit: SubmitHandler<RoundsPoints> = data => {
-    if (!categoryExists) {
-      mutation.mutate({ ...data, round_id: roundId })
-    } else {
-      mutation.mutate({
-        attempt_number: data.attempt_number,
-        time_limit: data.time_limit,
-        round_id: roundId,
-        category_exists: true
-      })
-    }
-  }
+  const onSubmit: SubmitHandler<RoundsPoints> = data => mutation.mutate({ ...data, round_id: roundId })
 
   return (
     <>
@@ -125,54 +101,32 @@ const RoundPointsList = (props: RoundPointsListProps) => {
                   />
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel>Captain</InputLabel>
-
-                    <Controller
-                      name='category_exists'
-                      control={control}
-                      defaultValue={false}
-                      render={({ field }) => (
-                        <Select label='Category' {...field}>
-                          <MenuItem value='true'>Exists</MenuItem>
-                          <MenuItem value='false'>Does Not Exist</MenuItem>
-                        </Select>
-                      )}
-                    />
-                  </FormControl>
+                <Grid item xs={12}>
+                  <Controller
+                    name='points'
+                    control={control}
+                    render={({ field }) => (
+                      <TextField fullWidth {...field} label='Points' type='number' placeholder='Points' required />
+                    )}
+                  />
                 </Grid>
 
-                {!categoryExists ? (
-                  <>
-                    <Grid item xs={12}>
-                      <Controller
-                        name='points'
-                        control={control}
-                        render={({ field }) => (
-                          <TextField fullWidth {...field} label='Points' type='number' placeholder='Points' required />
-                        )}
+                <Grid item xs={12}>
+                  <Controller
+                    name='negative_points'
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        fullWidth
+                        {...field}
+                        label='Negative Points'
+                        type='number'
+                        placeholder='Negative Points'
+                        required
                       />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Controller
-                        name='negative_points'
-                        control={control}
-                        render={({ field }) => (
-                          <TextField
-                            fullWidth
-                            {...field}
-                            label='Negative Points'
-                            type='number'
-                            placeholder='Negative Points'
-                            required
-                          />
-                        )}
-                      />
-                    </Grid>
-                  </>
-                ) : null}
+                    )}
+                  />
+                </Grid>
 
                 <Grid item xs={12}>
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end' }}>
@@ -206,7 +160,6 @@ const RoundPointsList = (props: RoundPointsListProps) => {
                 <TableCell>Points</TableCell>
                 <TableCell>Negative Points</TableCell>
                 <TableCell>Time Limit</TableCell>
-                <TableCell>Category</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -215,39 +168,30 @@ const RoundPointsList = (props: RoundPointsListProps) => {
                   <TableCell>{roundPoint.attempt_number}</TableCell>
 
                   <TableCell>
-                    {roundPoint.category_exists ? (
-                      '-'
-                    ) : (
-                      <Chip
-                        label={roundPoint.points}
-                        color={'info'}
-                        sx={{
-                          height: 24,
-                          fontSize: '0.75rem',
-                          textTransform: 'capitalize',
-                          '& .MuiChip-label': { fontWeight: 500 }
-                        }}
-                      />
-                    )}
+                    <Chip
+                      label={roundPoint.points}
+                      color={'info'}
+                      sx={{
+                        height: 24,
+                        fontSize: '0.75rem',
+                        textTransform: 'capitalize',
+                        '& .MuiChip-label': { fontWeight: 500 }
+                      }}
+                    />
                   </TableCell>
                   <TableCell>
-                    {roundPoint.category_exists ? (
-                      '-'
-                    ) : (
-                      <Chip
-                        label={roundPoint.negative_points}
-                        color={'error'}
-                        sx={{
-                          height: 24,
-                          fontSize: '0.75rem',
-                          textTransform: 'capitalize',
-                          '& .MuiChip-label': { fontWeight: 500 }
-                        }}
-                      />
-                    )}
+                    <Chip
+                      label={roundPoint.negative_points}
+                      color={'error'}
+                      sx={{
+                        height: 24,
+                        fontSize: '0.75rem',
+                        textTransform: 'capitalize',
+                        '& .MuiChip-label': { fontWeight: 500 }
+                      }}
+                    />
                   </TableCell>
                   <TableCell>{roundPoint.time_limit}</TableCell>
-                  <TableCell>{roundPoint.category_exists ? 'Yes' : 'No'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

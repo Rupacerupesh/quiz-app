@@ -20,7 +20,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert'
 
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
-import { Rounds, fetchRoundById, fetchCategories } from 'src/utils/api'
+import { Rounds, fetchRoundById } from 'src/utils/api'
 import { Controller, useForm } from 'react-hook-form'
 import RoundPointsList from 'src/views/rounds/RoundPointsList'
 import CategoriesSection from 'src/views/rounds/CategoriesSection'
@@ -38,12 +38,6 @@ const EditRound = () => {
     refetchOnWindowFocus: false,
     enabled: !!router.query.id
   })
-
-  const { data: fetchCategoriesData, refetch: refetchCategories } = useQuery([`fetchCategories`], fetchCategories, {
-    refetchOnWindowFocus: false
-  })
-
-  const categoriesList = fetchCategoriesData?.filter(item => item.round_id == router.query.id) ?? []
 
   const [open, setOpen] = React.useState(false)
 
@@ -120,12 +114,8 @@ const EditRound = () => {
         </Grid>
       </Grid>
 
-      {fetchCategoriesData ? (
-        <CategoriesSection
-          refetch={refetchCategories}
-          roundID={router.query.id as string}
-          categories={categoriesList}
-        />
+      {fetchData?.categories ? (
+        <CategoriesSection refetch={refetch} roundID={router.query.id as string} categories={fetchData.categories} />
       ) : null}
 
       <Box mt={10}>

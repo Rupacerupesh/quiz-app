@@ -51,7 +51,7 @@ const CategoriesSection = (props: CardHouseProps) => {
     }
   })
 
-  const onSubmit: SubmitHandler<Categories> = data => mutation.mutate({ ...data, round_id: roundID })
+  const onSubmit: SubmitHandler<Categories> = data => mutation.mutate({ ...data, attempt_number: 1, round_id: roundID })
 
   return (
     <>
@@ -70,13 +70,30 @@ const CategoriesSection = (props: CardHouseProps) => {
               <Grid container spacing={5}>
                 <Grid item xs={12}>
                   <Controller
-                    name='question_type'
+                    name='category_name'
                     control={control}
                     defaultValue=''
-                    render={({ field }) => <TextField {...field} label='Question Type' placeholder='Leonard Carter' />}
+                    render={({ field }) => <TextField fullWidth {...field} label='Name' placeholder='Leonard Carter' />}
                   />
 
-                  {errors.question_type && <span>This field is required</span>}
+                  {errors.category_name && <span>This field is required</span>}
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Controller
+                    name='time_limit'
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        fullWidth
+                        {...field}
+                        label='Time Limit'
+                        type='number'
+                        placeholder='Time Limit'
+                        required
+                      />
+                    )}
+                  />
                 </Grid>
 
                 <Grid item xs={12}>
@@ -85,7 +102,7 @@ const CategoriesSection = (props: CardHouseProps) => {
                     control={control}
                     defaultValue={0}
                     render={({ field }) => (
-                      <TextField {...field} label='Points' placeholder='Leonard Carter' type='number' />
+                      <TextField fullWidth {...field} label='Points' placeholder='Leonard Carter' type='number' />
                     )}
                   />
                 </Grid>
@@ -96,7 +113,13 @@ const CategoriesSection = (props: CardHouseProps) => {
                     control={control}
                     defaultValue={0}
                     render={({ field }) => (
-                      <TextField {...field} label='Negative Points' placeholder='Leonard Carter' type='number' />
+                      <TextField
+                        fullWidth
+                        {...field}
+                        label='Negative Points'
+                        placeholder='Leonard Carter'
+                        type='number'
+                      />
                     )}
                   />
                 </Grid>
@@ -127,7 +150,7 @@ const CategoriesSection = (props: CardHouseProps) => {
 
         {categories?.map(item => (
           <Grid key={item.id} xs={12} sm={6} md={4} item>
-            <CardCategories name={item.question_type} point={item.point} negativePoint={item.negative_points} />
+            <CardCategories name={item.category_name} point={item.point} negativePoint={item.negative_points} />
           </Grid>
         ))}
       </Grid>

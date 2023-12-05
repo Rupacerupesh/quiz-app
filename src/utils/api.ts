@@ -42,11 +42,11 @@ export interface Rounds {
   round_name: string
   round_description: string
   round_points: RoundsPoints[]
+  categories: Categories[]
 }
 
 export interface RoundsPoints {
   attempt_number: number
-  category_exists: boolean | string
   id?: number
   negative_points?: number
   points?: number
@@ -59,7 +59,9 @@ export interface Categories {
   negative_points: number
   point: number
   round_id: string
-  question_type: string
+  category_name: string
+  attempt_number: number
+  time_limit: number
 }
 
 export interface EventRounds {
