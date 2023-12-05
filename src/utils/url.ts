@@ -12,6 +12,7 @@ export const url = {
   getRoundPoints: '/round-points',
   postRoundPoints: '/round-point',
   getCategories: '/categories',
-  postCategory: '/category'
+  postCategory: '/category',
+  eventRounds: 'event-rounds/_bulk'
 }
 export default url

@@ -13,6 +13,7 @@ export type Events = {
 export type EventsById = {
   event: Events
   houses: HouseType[]
+  rounds: Rounds[]
 }
 
 export interface HouseType {
@@ -59,6 +60,11 @@ export interface Categories {
   point: number
   round_id: string
   question_type: string
+}
+
+export interface EventRounds {
+  event_id: string
+  round_ids: string[]
 }
 
 export const fetchEvents = async (): Promise<Events[]> => {
@@ -174,6 +180,16 @@ export const postRoundPoint = async (formData: RoundsPoints) => {
 export const postCategory = async (formData: Categories) => {
   const response = await authHttp({
     url: url.postCategory,
+    method: 'POST',
+    data: formData
+  })
+
+  return response.data
+}
+
+export const postRoundsOnEvents = async (formData: EventRounds) => {
+  const response = await authHttp({
+    url: url.eventRounds,
     method: 'POST',
     data: formData
   })

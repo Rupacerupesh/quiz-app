@@ -104,7 +104,7 @@ const HousesSection = (props: CardHouseProps) => {
       <Grid container spacing={6} mt={4}>
         <Grid item xs={12} sx={{ pb: 4, pt: theme => `${theme.spacing(17.5)} !important` }}>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Typography variant='h5'>Houses</Typography>
+            {<Typography variant='h5'>{houses.length > 0 ? 'Houses' : ''} </Typography>}
 
             <Button size='medium' variant='contained' color='primary' onClick={handleOpen}>
               Add New House

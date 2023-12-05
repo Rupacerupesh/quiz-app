@@ -26,6 +26,7 @@ import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
 import { Events, fetchEventById } from 'src/utils/api'
 import { Controller, useForm } from 'react-hook-form'
+import RoundsSection from 'src/views/events/RoundsSection'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
@@ -164,6 +165,10 @@ const FormLayoutsBasic = () => {
           </Card>
         </Grid>
       </Grid>
+
+      {fetchData?.rounds ? (
+        <RoundsSection refetch={refetch} eventID={router.query.id as string} rounds={fetchData.rounds} />
+      ) : null}
 
       {fetchData?.houses ? (
         <HousesSection refetch={refetch} eventID={router.query.id as string} houses={fetchData.houses} />
