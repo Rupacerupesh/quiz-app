@@ -58,7 +58,7 @@ const Events = () => {
                     <TableCell>
                       <Typography variant='caption'>{ev.description}</Typography>
                     </TableCell>
-                    <TableCell width={200}>{format(new Date(ev.event_date), 'yyyy-MM-dd')}</TableCell>
+                    <TableCell width={200}>{format(new Date(ev.event_date), 'yyyy/MM/dd')}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -161,7 +161,7 @@ export const fetchRoundPoints = async (): Promise<RoundsPoints[]> => {
 
 export const postRound = async (formData: Rounds) => {
   const response = await authHttp({
-    url: url.postEvent,
+    url: url.postRound,
     method: 'POST',
     data: formData
   })

@@ -12,6 +12,7 @@ interface CardCategories {
   name: string
   point: number
   negativePoint: number
+  timeLimit: number
 }
 
 const StyledBox = styled(Box)<BoxProps>(({ theme }) => ({
@@ -21,7 +22,7 @@ const StyledBox = styled(Box)<BoxProps>(({ theme }) => ({
 }))
 
 const CardCategories = (props: CardCategories) => {
-  const { name, point, negativePoint } = props
+  const { name, point, negativePoint, timeLimit } = props
 
   return (
     <>
@@ -42,9 +43,14 @@ const CardCategories = (props: CardCategories) => {
                     Points
                   </Typography>
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ mb: 6.75, display: 'flex', alignItems: 'center' }}>
                   <Typography variant='body2' color='common.white'>
                     Negative Points
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography variant='body2' color='common.white'>
+                    Time Limit
                   </Typography>
                 </Box>
               </StyledBox>
@@ -55,9 +61,14 @@ const CardCategories = (props: CardCategories) => {
                   {point}
                 </Typography>
               </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ mb: 6.75, display: 'flex', alignItems: 'center' }}>
                 <Typography variant='body2' color='common.white'>
                   {negativePoint}
+                </Typography>
+              </Box>
+              <Box sx={{ mb: 6.75, display: 'flex', alignItems: 'center' }}>
+                <Typography variant='body2' color='common.white'>
+                  {timeLimit}
                 </Typography>
               </Box>
             </Grid>

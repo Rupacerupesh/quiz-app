@@ -22,3 +22,6 @@ code:not([class*='language-']):after {
 code[class*='language-'] {
   padding: 0;
 }
+pre {
+  white-space: pre-wrap; /* Preserve spaces and line breaks, and wrap text as needed */
+}

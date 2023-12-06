@@ -8,14 +8,16 @@ import CardContent from '@mui/material/CardContent'
 import { Button, CardActions, Collapse, Divider, IconButton } from '@mui/material'
 import React, { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'mdi-material-ui'
+import { useRouter } from 'next/router'
 
 interface CardHouseProps {
   name: string
   description: string
+  roundId: string
 }
 
 const CardRounds = (props: CardHouseProps) => {
-  const { name, description } = props
+  const { name, description, roundId } = props
 
   const [collapse, setCollapse] = useState<boolean>(false)
 
@@ -23,11 +25,14 @@ const CardRounds = (props: CardHouseProps) => {
     setCollapse(!collapse)
   }
 
+  const router = useRouter()
+  const routeToDetails = () => router.push(`/rounds/${roundId}`)
+
   return (
     <>
       <Card>
         <CardContent>
-          <Typography variant='h6' sx={{ marginBottom: 2 }}>
+          <Typography variant='h6' sx={{ marginBottom: 2, cursor: 'pointer' }} onClick={routeToDetails}>
             {name}
           </Typography>
         </CardContent>
@@ -49,7 +54,9 @@ const CardRounds = (props: CardHouseProps) => {
         <Collapse in={collapse}>
           <Divider sx={{ margin: 0 }} />
           <CardContent>
-            <Typography variant='body2'>{description}</Typography>
+            <pre>
+              <Typography variant='body2'>{description}</Typography>
+            </pre>
           </CardContent>
         </Collapse>
       </Card>

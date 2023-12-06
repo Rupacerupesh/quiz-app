@@ -150,7 +150,12 @@ const CategoriesSection = (props: CardHouseProps) => {
 
         {categories?.map(item => (
           <Grid key={item.id} xs={12} sm={6} md={4} item>
-            <CardCategories name={item.category_name} point={item.point} negativePoint={item.negative_points} />
+            <CardCategories
+              name={item.category_name}
+              point={item.point}
+              negativePoint={item.negative_points}
+              timeLimit={item.time_limit}
+            />
           </Grid>
         ))}
       </Grid>

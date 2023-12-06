@@ -26,7 +26,7 @@ const AddRound = () => {
 
   const mutation = useMutation({
     mutationFn: postRound,
-    onSuccess: data => router.push(`/events/${data.id}`)
+    onSuccess: data => router.push(`/rounds/${data.id}`)
   })
 
   const onSubmit: SubmitHandler<Rounds> = data => mutation.mutate(data)

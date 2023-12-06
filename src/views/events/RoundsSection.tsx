@@ -171,7 +171,7 @@ const RoundsSection = (props: CardHouseProps) => {
 
         {rounds?.map(item => (
           <Grid key={item.round_id} xs={12} sm={6} md={4} item>
-            <CardRounds name={item.round_name} description={item.round_description} />
+            <CardRounds name={item.round_name} description={item.round_description} roundId={item.round_id} />
           </Grid>
         ))}
       </Grid>
