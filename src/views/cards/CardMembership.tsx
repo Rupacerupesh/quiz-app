@@ -13,6 +13,7 @@ import TrendingUp from 'mdi-material-ui/TrendingUp'
 import StarOutline from 'mdi-material-ui/StarOutline'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 import LockOpenOutline from 'mdi-material-ui/LockOpenOutline'
+import { Tab, Tabs } from '@mui/material'
 
 // Styled Box component
 const StyledBox = styled(Box)<BoxProps>(({ theme }) => ({
@@ -27,6 +28,22 @@ const CardMembership = () => {
       <Grid container spacing={6}>
         <Grid item xs={12} sm={7}>
           <CardContent sx={{ padding: theme => `${theme.spacing(3.25, 5.75, 6.25)} !important` }}>
+            <Tabs
+              orientation='vertical'
+              variant='scrollable'
+              value={0}
+              aria-label='Vertical tabs example'
+              sx={{ borderRight: 1, borderColor: 'divider' }}
+            >
+              <Tab label='Item One' value={0} />
+              <Tab label='Item Two' value={1} />
+              <Tab label='Item Three' value={2} />
+              <Tab label='Item Four' value={3} />
+              <Tab label='Item Five' value={4} />
+              <Tab label='Item Six' value={5} />
+              <Tab label='Item Seven' value={6} />
+            </Tabs>
+
             <Typography variant='h6' sx={{ marginBottom: 3.5 }}>
               Lifetime Membership
             </Typography>

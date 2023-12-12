@@ -13,6 +13,9 @@ export const url = {
   postRoundPoints: '/round-point',
   getCategories: '/categories',
   postCategory: '/category',
-  eventRounds: 'event-rounds/_bulk'
+  eventRounds: 'event-rounds/_bulk',
+  createSession: 'event/:eventId/session',
+  getLeaderBoard: 'leaderboard/:sessionId',
+  createLeaderBoard: 'event/:eventId/leaderboard/:sessionId'
 }
 export default url

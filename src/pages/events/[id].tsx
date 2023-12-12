@@ -27,6 +27,7 @@ import { useQuery } from 'react-query'
 import { Events, fetchEventById } from 'src/utils/api'
 import { Controller, useForm } from 'react-hook-form'
 import RoundsSection from 'src/views/events/RoundsSection'
+import CardLeaderBoard from 'src/views/cards/CardLeaderBoard'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
@@ -163,6 +164,10 @@ const FormLayoutsBasic = () => {
               </form>
             </CardContent>
           </Card>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <CardLeaderBoard />
         </Grid>
       </Grid>
 

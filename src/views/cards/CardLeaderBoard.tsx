@@ -11,7 +11,27 @@ import TabContext from '@mui/lab/TabContext'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 
-const CardNavigation = () => {
+interface Leaderboard {
+  id: string
+  session_id: string
+  event_id: string
+  rounds: Rounds
+}
+
+interface Rounds {
+  id: string
+  event_round_id: string
+  name: string
+  houses: House[]
+}
+
+interface House {
+  id: string
+  name: string
+  points: string
+}
+
+const CardLeaderBoard = () => {
   // ** State
   const [value, setValue] = useState<string>('1')
 
@@ -22,7 +42,7 @@ const CardNavigation = () => {
   return (
     <Card>
       <TabContext value={value}>
-        <TabList onChange={handleChange} aria-label='card navigation example'>
+        <TabList onChange={handleChange} aria-label='card navigation example' variant='scrollable' scrollButtons='auto'>
           <Tab value='1' label='Item One' />
           <Tab value='2' label='Item Two' />
           <Tab value='3' label='Item Three' />
@@ -71,4 +91,4 @@ const CardNavigation = () => {
   )
 }
 
-export default CardNavigation
+export default CardLeaderBoard
