@@ -9,11 +9,15 @@ import TabPanel from '@mui/lab/TabPanel'
 import TabContext from '@mui/lab/TabContext'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-import { Avatar, Box, CardHeader, Grid } from '@mui/material'
+import { Avatar, Box, CardHeader, Grid, styled } from '@mui/material'
 import { useQuery } from 'react-query'
 import { fetchLeaderBoard } from 'src/utils/api'
 import PointsInput from 'src/views/leaderboard/PointsInput'
 import { useRouter } from 'next/router'
+
+const TrophyImg = styled('img')({
+  height: 50
+})
 
 const LeaderBoard = () => {
   const router = useRouter()
@@ -51,12 +55,11 @@ const LeaderBoard = () => {
 
         return {
           name: e.house_name,
-          point: point
+          point: point,
+          color: e.color_code
         }
       })
       .sort((a, b) => b.point - a.point) ?? []
-
-  console.log({ totalData })
 
   const renderContent = () => {
     const selectedRound = data?.leader_board.find(e => e.round_name === value)
@@ -77,16 +80,16 @@ const LeaderBoard = () => {
                   <Typography variant='h6'>{e.house_name}</Typography>
 
                   <Typography
-                    variant='h6'
                     sx={{
                       lineHeight: 1.5
                     }}
                   >
-                    {selectedRound.houses.find(item => item.house_id === e.id)?.score ?? 0}
+                    {selectedRound.houses.find(item => item.house_id === e.id)?.score ?? 0} pts
                   </Typography>
                 </Grid>
 
                 <PointsInput
+                  houseName={e.house_name}
                   eventId={data.event_id}
                   sessionId={data.session_id}
                   refetch={refetch}
@@ -108,10 +111,15 @@ const LeaderBoard = () => {
           <Typography variant='h5'>LeaderBoard</Typography>
         </Grid>
 
-        <Grid item md={6} marginBottom={10}>
+        <Grid item md={6} xs={12} marginBottom={10}>
           <Card>
             <CardHeader
-              title='Total'
+              title={
+                <>
+                  <TrophyImg alt='trophy' src='/images/misc/trophy.png' />
+                  Rank
+                </>
+              }
               titleTypographyProps={{ sx: { lineHeight: '1.2 !important', letterSpacing: '0.31px !important' } }}
             />
             <CardContent sx={{ pt: theme => `${theme.spacing(2)} !important` }}>
@@ -131,7 +139,7 @@ const LeaderBoard = () => {
                       marginRight: 3,
                       fontSize: '1rem',
                       color: 'common.white',
-                      backgroundColor: 'primary.main'
+                      backgroundColor: e.color
                     }}
                   >
                     {index + 1}
@@ -156,7 +164,7 @@ const LeaderBoard = () => {
                           lineHeight: 1.5
                         }}
                       >
-                        {e.point}
+                        {e.point} pts
                       </Typography>
                     </Box>
                   </Box>
@@ -169,14 +177,14 @@ const LeaderBoard = () => {
           <Card>
             <TabContext value={value}>
               <Grid container spacing={6}>
-                <Grid item md={2}>
+                <Grid item md={3}>
                   <TabList onChange={handleChange} aria-label='card navigation example' orientation='vertical'>
                     {data?.leader_board.map(e => (
                       <Tab key={e.round_id} value={e.round_name} label={e.round_name} />
                     ))}
                   </TabList>
                 </Grid>
-                <Grid item md={10}>
+                <Grid item md={9}>
                   {renderContent()}
                 </Grid>
               </Grid>

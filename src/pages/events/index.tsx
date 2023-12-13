@@ -157,6 +157,7 @@ const Events = () => {
                       </IconButton>
 
                       <IconButton
+                        disabled={ev.session.length === 0}
                         size='small'
                         aria-label='settings'
                         className='card-more-options'

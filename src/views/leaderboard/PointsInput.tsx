@@ -1,11 +1,17 @@
 // ** MUI Imports
 
 // ** Icons Imports
-import { Button, Grid, TextField } from '@mui/material'
+import { Button, Grid, Snackbar, TextField } from '@mui/material'
 import React, { useState } from 'react'
 
 import { postLeaderBoard } from 'src/utils/api'
 import { useMutation } from 'react-query'
+
+import MuiAlert, { AlertProps } from '@mui/material/Alert'
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
+})
 
 interface PointsInputProps {
   refetch: () => void
@@ -13,14 +19,16 @@ interface PointsInputProps {
   houseId: string
   eventId: string
   sessionId: string
+  houseName: string
 }
 
 const PointsInput = (props: PointsInputProps) => {
-  const { roundId, houseId, refetch, eventId, sessionId } = props
+  const { roundId, houseId, refetch, eventId, sessionId, houseName } = props
 
   const mutation = useMutation({
     mutationFn: postLeaderBoard,
     onSuccess: () => {
+      setOpen(value)
       setValue(0)
       refetch()
     }
@@ -41,6 +49,15 @@ const PointsInput = (props: PointsInputProps) => {
   const onChangeValue = (e: any) => {
     setValue(parseInt(e.target.value))
   }
+  const [open, setOpen] = React.useState<number | null>(null)
+
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    setOpen(null)
+  }
 
   return (
     <>
@@ -59,6 +76,17 @@ const PointsInput = (props: PointsInputProps) => {
           Add
         </Button>
       </Grid>
+
+      <Snackbar
+        open={!!open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
+      >
+        <Alert severity='success' sx={{ width: '100%' }}>
+          {open} Points Added to {houseName} house
+        </Alert>
+      </Snackbar>
     </>
   )
 }
