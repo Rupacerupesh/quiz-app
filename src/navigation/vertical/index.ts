@@ -4,6 +4,7 @@ import Calendar from 'mdi-material-ui/Calendar'
 import AccountGroup from 'mdi-material-ui/AccountGroup'
 import CalendarSync from 'mdi-material-ui/CalendarSync'
 import Medal from 'mdi-material-ui/Medal'
+import ChatQuestion from 'mdi-material-ui/ChatQuestion'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -34,6 +35,11 @@ const navigation = (): VerticalNavItemsType => {
       title: 'Leaderboard',
       icon: Medal,
       path: '/leaderboard'
+    },
+    {
+      title: 'Questions',
+      icon: ChatQuestion,
+      path: '/questions'
     }
   ]
 }

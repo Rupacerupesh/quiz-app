@@ -9,7 +9,7 @@ import TabPanel from '@mui/lab/TabPanel'
 import TabContext from '@mui/lab/TabContext'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-import { Avatar, Box, CardHeader, Grid, styled } from '@mui/material'
+import { Avatar, Box, Button, CardHeader, Grid, styled } from '@mui/material'
 import { useQuery } from 'react-query'
 import { fetchLeaderBoard } from 'src/utils/api'
 import PointsInput from 'src/views/leaderboard/PointsInput'
@@ -107,8 +107,19 @@ const LeaderBoard = () => {
   return (
     <>
       <Grid container spacing={6}>
-        <Grid item xs={12} marginBottom={10}>
+        <Grid item xs={12}>
           <Typography variant='h5'>LeaderBoard</Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Button
+            size='medium'
+            variant='contained'
+            color='primary'
+            onClick={() => window.open(data?.redirect_url, '_blank', 'noreferrer')}
+          >
+            View ScoreBoard
+          </Button>
         </Grid>
 
         <Grid item md={6} xs={12} marginBottom={10}>

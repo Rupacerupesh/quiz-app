@@ -146,6 +146,13 @@ const Events = () => {
                     </TableCell>
                     <TableCell width={200}>{format(new Date(ev.event_date), 'yyyy/MM/dd')}</TableCell>
                     <TableCell>
+                      <Button
+                        size='small'
+                        variant='outlined'
+                        onClick={() => window.open(ev.participant_url, '_blank', 'noreferrer')}
+                      >
+                        Participants
+                      </Button>
                       <IconButton
                         size='small'
                         aria-label='settings'

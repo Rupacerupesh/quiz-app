@@ -9,6 +9,7 @@ export type Events = {
   event_date: string
   status: boolean
   session: Session[]
+  participant_url: string
 }
 
 export type EventsById = {
@@ -99,6 +100,7 @@ export interface Leaderboard {
   session_id: string
   houses: HouseType[]
   leader_board: LeaderboardRounds[]
+  redirect_url: string
 }
 
 export interface LeaderboardScoreFormData {
