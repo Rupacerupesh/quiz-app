@@ -18,9 +18,23 @@ import { Rounds, postRound } from 'src/utils/api'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
+import Editor from 'src/views/shared/Editor'
+import { Alert, AlertTitle } from '@mui/material'
 
 const AddRound = () => {
-  const { handleSubmit, control } = useForm<Rounds>()
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    setError,
+    clearErrors,
+    formState: { errors }
+  } = useForm<Rounds>()
+
+  const onChange = (val: string) => {
+    setValue('round_description', val)
+    clearErrors('round_description')
+  }
 
   const router = useRouter()
 
@@ -29,14 +43,20 @@ const AddRound = () => {
     onSuccess: data => router.push(`/rounds/${data.id}`)
   })
 
-  const onSubmit: SubmitHandler<Rounds> = data => mutation.mutate(data)
+  const onSubmit: SubmitHandler<Rounds> = data => {
+    if (!data.round_description) {
+      setError('round_description', { message: 'Required' })
+    }
+
+    mutation.mutate(data)
+  }
 
   return (
     <DatePickerWrapper>
       <Typography variant='h5'>Add new Round</Typography>
 
       <Grid container spacing={6} mt={4}>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Card>
             <CardHeader title='Add new Round' titleTypographyProps={{ variant: 'h6' }} />
             <CardContent>
@@ -55,23 +75,13 @@ const AddRound = () => {
                   </Grid>
 
                   <Grid item xs={12}>
-                    <Controller
-                      name='round_description'
-                      control={control}
-                      defaultValue=''
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          fullWidth
-                          multiline
-                          minRows={3}
-                          required
-                          label='Description'
-                          placeholder='Description...'
-                          sx={{ '& .MuiOutlinedInput-root': { alignItems: 'baseline' } }}
-                        />
-                      )}
-                    />
+                    <Editor onChange={onChange} />
+
+                    {errors.round_description && (
+                      <Alert severity='error' sx={{ marginTop: 4 }}>
+                        <AlertTitle>This field is required</AlertTitle>
+                      </Alert>
+                    )}
                   </Grid>
 
                   <Grid item xs={12}>

@@ -56,9 +56,7 @@ const Rounds = () => {
                       </Typography>
                     </TableCell>
                     <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
-                      <pre>
-                        <Typography variant='caption'>{row.round_description}</Typography>
-                      </pre>
+                      <Typography dangerouslySetInnerHTML={{ __html: row.round_description }} variant='caption' />
                     </TableCell>
                   </TableRow>
                 ))}

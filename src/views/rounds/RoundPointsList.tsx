@@ -164,7 +164,11 @@ const RoundPointsList = (props: RoundPointsListProps) => {
             </TableHead>
             <TableBody>
               {roundPointsData?.map(roundPoint => (
-                <TableRow hover key={roundPoint.id} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
+                <TableRow
+                  hover
+                  key={roundPoint.attempt_number}
+                  sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}
+                >
                   <TableCell>{roundPoint.attempt_number}</TableCell>
 
                   <TableCell>

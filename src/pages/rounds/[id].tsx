@@ -15,7 +15,7 @@ import CardContent from '@mui/material/CardContent'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import React from 'react'
-import { Snackbar } from '@mui/material'
+import { AlertTitle, Snackbar } from '@mui/material'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 
 import { useRouter } from 'next/router'
@@ -24,6 +24,7 @@ import { Rounds, fetchRoundById } from 'src/utils/api'
 import { Controller, useForm } from 'react-hook-form'
 import RoundPointsList from 'src/views/rounds/RoundPointsList'
 import CategoriesSection from 'src/views/rounds/CategoriesSection'
+import Editor from 'src/views/shared/Editor'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
@@ -49,7 +50,17 @@ const EditRound = () => {
     setOpen(false)
   }
 
-  const { control, setValue } = useForm<Rounds>()
+  const {
+    control,
+    setValue,
+    clearErrors,
+    formState: { errors }
+  } = useForm<Rounds>()
+
+  const onChange = (val: string) => {
+    setValue('round_description', val)
+    clearErrors('round_description')
+  }
 
   useEffect(() => {
     if (fetchData) {
@@ -80,25 +91,16 @@ const EditRound = () => {
                     />
                   </Grid>
 
-                  <Grid item xs={12}>
-                    <Controller
-                      name='round_description'
-                      control={control}
-                      defaultValue=''
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          fullWidth
-                          multiline
-                          minRows={3}
-                          required
-                          label='Description'
-                          placeholder='Description...'
-                          sx={{ '& .MuiOutlinedInput-root': { alignItems: 'baseline' } }}
-                        />
+                  {fetchData?.round_description && (
+                    <Grid item xs={12}>
+                      <Editor onChange={onChange} initialValue={fetchData?.round_description} />
+                      {errors.round_description && (
+                        <Alert severity='error' sx={{ marginTop: 4 }}>
+                          <AlertTitle>This field is required</AlertTitle>
+                        </Alert>
                       )}
-                    />
-                  </Grid>
+                    </Grid>
+                  )}
 
                   <Grid item xs={12}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end' }}>
